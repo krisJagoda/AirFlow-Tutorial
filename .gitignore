@@ -6,14 +6,21 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+#Idea dependancies
 .idea/
+.DS_Store
 
 # Python dependancies
-py_env/
-logs/
+airflow-config/py_env/
+airflow-config/logs/
 
 # Airflow dependancies
 airflow.db
 sqlite.tar.gz
 sqlite/
+
+# Docker dependancies
+/airflow-docker/logs
+airflow-docker/plugins
 
