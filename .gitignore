@@ -23,5 +23,4 @@ sqlite/
 # Docker dependancies
 /airflow-docker/logs
 airflow-docker/plugins
-airflow-docker/docker-compose.yaml
 
