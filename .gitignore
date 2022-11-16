@@ -23,4 +23,5 @@ sqlite/
 # Docker dependancies
 /airflow-docker/logs
 airflow-docker/plugins
+airflow-docker/dags/__pycache__/
 
