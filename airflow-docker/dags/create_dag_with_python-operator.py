@@ -12,27 +12,43 @@ default_args = {
 local_tz = pendulum.timezone('Europe/Warsaw')
 
 
-def great(name, age):
-    print(f"Hello World! My name is {name}, "
+def greet(ti):
+    first_name = ti.xcom_pull(task_ids='get_name', key='first_name')
+    last_name = ti.xcom_pull(task_ids='get_name', key='last_name')
+    age = ti.xcom_pull(task_ids='get_age', key='age')
+    print(f"Hello World! My name is {first_name} {last_name}, "
           f"and I am {age} years old!")
+
+
+def get_name(ti):
+    ti.xcom_push(key='first_name', value='Kristian')
+    ti.xcom_push(key='last_name', value='J')
+
+
+def get_age(ti):
+    ti.xcom_push(key='age', value=33)
 
 
 with DAG(
         default_args=default_args,
-        dag_id='my_first_dag_with_python_operator_v01',
+        dag_id='my_first_dag_with_python_operator_v02',
         description='My first DAG with Python Operator',
         start_date=datetime(2022, 11, 20, tzinfo=local_tz),
         schedule_interval='@daily'
 ) as dag:
     task1 = PythonOperator(
-        task_id='great',
-        python_callable=great,
-        op_kwargs={'name': 'Krystian', 'age': 33}
+        task_id='greet',
+        python_callable=greet
     ),
     task2 = PythonOperator(
-        task_id='say_hi',
-        python_callable=great,
-        op_kwargs={'name': 'Adam', 'age': 32}
+        task_id='get_name',
+        python_callable=get_name
+    ),
+    task3 = PythonOperator(
+        task_id='get_age',
+        python_callable=get_age
     )
 
-    task1 >> task2
+    task2 >> task3 >> task1
+
+# Note maximum XCOM size in memory is 48KB!
