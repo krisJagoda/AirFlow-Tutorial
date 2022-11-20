@@ -31,6 +31,13 @@ with DAG(
         task_id='third_task',
         bash_command="echo Third task will execute after the second one completes successfully."
     )
+    # first method to create task dependencies:
+    # task1.set_downstream(task2)
+    # task2.set_downstream(task3)
 
-    task1.set_downstream(task2)
-    task2.set_downstream(task3)
+    # second method to create task dependencies:
+    # task1 >> task2
+    # task1 >> task3
+
+    # third method to create task dependencies:
+    task1 >> [task2, task3]
