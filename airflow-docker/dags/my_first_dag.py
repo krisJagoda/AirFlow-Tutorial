@@ -26,10 +26,11 @@ with DAG(
         task_id='second_task',
         bash_command="echo This is the second task which needs to be executed."
     )
+    # The initial flow has been changed to ensure the second task executed concurrently with the second task:
 
     task3 = BashOperator(
         task_id='third_task',
-        bash_command="echo Third task will execute after the second one completes successfully."
+        bash_command="echo Third task will execute concurrently with the second task."
     )
     # first method to create task dependencies:
     # task1.set_downstream(task2)
