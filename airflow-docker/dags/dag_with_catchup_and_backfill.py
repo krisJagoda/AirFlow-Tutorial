@@ -19,5 +19,5 @@ with DAG(
 ) as dag:
     task1 = BashOperator(
         task_id='task1',
-        bash_command='echo This is a batch operator task!'
+        bash_command="echo This is a bash operator task"
     )
